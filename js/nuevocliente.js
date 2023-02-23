@@ -40,6 +40,37 @@
       return;
 
     }
+
+    // Create an object with the information
+
+    const client = { name, email, phone, company, id: Date.now() };
+
+    createNewClient(client);
+
+    
+  }
+
+  function createNewClient(client) {
+    
+    const transaction = DB.transaction(['crm'], 'readwrite');
+    const objectStore = transaction.objectStore('crm');
+
+    objectStore.add(client)
+
+    transaction.onerror = (e) => {
+      printAlert('There was an error, check your data again', 'error');
+    }
+
+    transaction.oncomplete = () => {
+
+      form.reset()
+      printAlert('New client created ok');
+
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2000)
+
+    }
   }
 
   function printAlert(message, typeAlert) {
