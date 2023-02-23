@@ -100,7 +100,7 @@
             aDelete.className = 'text-red-600 hover:text-red-900 mr-5'
             aEdit.textContent = 'Edit';
             aDelete.textContent = 'Delete';
-            aEdit.setAttribute('href', '#');
+            aEdit.setAttribute('href', `editar-cliente.html?id=${id}`);
             aDelete.setAttribute('href', '#');
             aDelete.setAttribute('data-cliente', `${id}`);
             tdActions.appendChild(aEdit);
