@@ -1,12 +1,10 @@
 (function() {
 
-  let DB;
   
   document.addEventListener('DOMContentLoaded', () => {
     createDB();
 
     if(window.indexedDB.open('crm', 1)) {
-
       printClients();
     
     }
@@ -47,16 +45,10 @@
 
   function printClients() {
   
-    const openConection = window.indexedDB.open('crm', 1);
+      conectDB();
 
-    openConection.onerror = () => {
-      console.log('there was an error');
-    }
-
-    openConection.onsuccess = () => {
-      DB = openConection.result;
+      setTimeout( () => {
       const objectStore = DB.transaction('crm').objectStore('crm');
-      const tableBody = document.querySelector('#listado-clientes');
       
       
         objectStore.openCursor().onsuccess = (e) => {
@@ -115,8 +107,9 @@
             cursor.continue();
           }
         }
+      },500)
 
-    }
+    
     
   
   

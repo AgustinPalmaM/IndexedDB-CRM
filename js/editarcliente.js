@@ -1,13 +1,13 @@
 (function() {
-  let DB;
 
-  const nameInput = document.querySelector('#nombre');
-  const emailInput = document.querySelector('#email');
-  const phoneInput = document.querySelector('#telefono');
-  const companyInput = document.querySelector('#empresa');
 
   document.addEventListener('DOMContentLoaded', () => {
-    connectDB();
+    
+    conectDB();
+
+    // Update client information
+
+    form.addEventListener( 'submit', updateClient );
 
     // Chek url client id
 
@@ -23,6 +23,15 @@
 
 
   });
+
+  function updateClient(e) {
+    e.preventDefault();
+
+    if( nameInput.value === '' || emailInput.value === '' || phoneInput.value === '' || companyInput.value === '' ) {
+      console.log('there was an error');
+      return
+    }
+  }
 
   function getClient(id) {
     const transaction = DB.transaction(['crm'], 'readwrite');
@@ -46,22 +55,13 @@
   function fillForm(clientData) {
 
     const { name, email, phone, company } = clientData;
+
     nameInput.value = name;
     emailInput.value = email;
     phoneInput.value = phone;
     companyInput.value = company;
+
   }
 
-  function connectDB() {
-    const openConection = window.indexedDB.open('crm', 1);
-
-    openConection.onerror = () => {
-      console.log('There was an error')
-    }
-
-    openConection.onsuccess = () => {
-      DB = openConection.result;
-    }
-  }
 
 })();
