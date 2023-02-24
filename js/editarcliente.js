@@ -1,6 +1,6 @@
 (function() {
 
-
+  let idClient;
   document.addEventListener('DOMContentLoaded', () => {
     
     conectDB();
@@ -12,7 +12,7 @@
     // Chek url client id
 
     const urlParams = new URLSearchParams(window.location.search);
-    const idClient = urlParams.get('id');
+    idClient = urlParams.get('id');
 
     if(idClient) {
       setTimeout( () => {
@@ -28,8 +28,33 @@
     e.preventDefault();
 
     if( nameInput.value === '' || emailInput.value === '' || phoneInput.value === '' || companyInput.value === '' ) {
-      console.log('there was an error');
+      printAlert('there was an error', 'error');
       return
+    } 
+
+    // update client
+    const updatedClient = {
+      name: nameInput.value,
+      email: emailInput.value,
+      phone: phoneInput.value,
+      company: companyInput.value,
+      id: Number(idClient)
+    }
+
+    const transaction = DB.transaction(['crm'], 'readwrite');
+    const objectStore = transaction.objectStore('crm');
+
+    objectStore.put(updatedClient);
+
+    transaction.oncomplete = () => {
+      printAlert('Client edited succesfully');
+      setTimeout( () => {
+        window.location.href = 'index.html'
+      },1000)
+    }
+
+    transaction.onerror = () => {
+      printAlert('There was an error', 'error')
     }
   }
 
