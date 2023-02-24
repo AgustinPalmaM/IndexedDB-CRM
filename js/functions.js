@@ -38,8 +38,41 @@ function conectDB() {
 
   openConection.onsuccess = () => {
     DB = openConection.result;
-    console.log('conection ok')
-    console.log(DB);
   }
 
 };
+
+function getClient(id, action) {
+  const transaction = DB.transaction(['crm'], 'readwrite');
+  const objectStore = transaction.objectStore('crm');
+
+  const client = objectStore.openCursor();
+  client.onsuccess = (e) => {
+    const cursor = e.target.result;
+
+    if(cursor) {
+      if(cursor.value.id === Number(id)) {
+        console.log(cursor.value);
+        action(cursor.value);
+      }
+
+      cursor.continue();
+    }
+  }
+}
+
+function fillForm(clientData) {
+
+  const { name, email, phone, company } = clientData;
+
+  nameInput.value = name;
+  emailInput.value = email;
+  phoneInput.value = phone;
+  companyInput.value = company;
+
+}
+
+function showName(clientData) {
+  const { name } = clientData;
+  return name;
+}

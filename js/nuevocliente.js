@@ -6,8 +6,6 @@
     form.addEventListener("submit", validateClient);
   });
 
-
-
   function validateClient(e) {
     e.preventDefault();
 
@@ -47,7 +45,7 @@
 
       setTimeout(() => {
         window.location.href = "index.html";
-      }, 2000);
+      }, 500);
     };
   }
 })();

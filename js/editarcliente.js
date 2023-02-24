@@ -16,7 +16,7 @@
 
     if(idClient) {
       setTimeout( () => {
-        getClient(idClient);
+        getClient(idClient, fillForm);
       },500)
     }
 
@@ -50,7 +50,7 @@
       printAlert('Client edited succesfully');
       setTimeout( () => {
         window.location.href = 'index.html'
-      },1000)
+      },500)
     }
 
     transaction.onerror = () => {
@@ -58,35 +58,9 @@
     }
   }
 
-  function getClient(id) {
-    const transaction = DB.transaction(['crm'], 'readwrite');
-    const objectStore = transaction.objectStore('crm');
 
-    const client = objectStore.openCursor();
-    client.onsuccess = (e) => {
-      const cursor = e.target.result;
 
-      if(cursor) {
-        if(cursor.value.id === Number(id)) {
-          
-          fillForm(cursor.value);
-        }
 
-        cursor.continue();
-      }
-    }
-  }
-
-  function fillForm(clientData) {
-
-    const { name, email, phone, company } = clientData;
-
-    nameInput.value = name;
-    emailInput.value = email;
-    phoneInput.value = phone;
-    companyInput.value = company;
-
-  }
 
 
 })();
