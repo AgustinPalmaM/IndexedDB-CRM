@@ -1,5 +1,4 @@
 (function () {
-  const form = document.querySelector("#formulario");
 
   document.addEventListener("DOMContentLoaded", () => {
     conectDB();
@@ -7,21 +6,7 @@
     form.addEventListener("submit", validateClient);
   });
 
-  function conectDB() {
-    
-    const openConection = window.indexedDB.open('crm', 1);
-  
-    openConection.onerror = () => {
-      console.log('there was an error');
-    };
-  
-    openConection.onsuccess = () => {
-      DB = openConection.result;
-      console.log('conection ok')
-      console.log(DB);
-    }
-  
-  };
+
 
   function validateClient(e) {
     e.preventDefault();
